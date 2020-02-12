@@ -108,3 +108,9 @@ dist
 
 # package lock
 package-lock.json
+
+# enviorment
+.env
+
+# etc
+uploads
