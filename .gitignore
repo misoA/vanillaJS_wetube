@@ -114,4 +114,5 @@ package-lock.json
 
 # etc
 uploads
+static
 .eslint*
