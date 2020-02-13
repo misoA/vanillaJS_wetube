@@ -3,10 +3,12 @@ extends layouts/main.pug
 block content
     .form-container
         form(action=routes.users+routes.profile method='post')
-            label(for='avatar') Avatar
-            input(type="file" id="avatar" name="avatar" placeholder="Avatar")
+            .fileUpload
+                label(for='avatar') Avatar
+                input(type="file" id="avatar" name="avatar" placeholder="Avatar")
             input(type="text" name="name" placeholder="Name")
             input(type="eamil" name="eamil" placeholder="Email")
             input(type="submit" value="Update Profile")
-        a.form-container__link(href=routes.users+routes.changePassword) Change Password
+        a.form-container__link(href=routes.users+routes.changePassword)
+            button Change Password
 
