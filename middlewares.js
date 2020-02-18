@@ -9,7 +9,7 @@ export const uploadVideo = multerVideo.single('videoFile');
 export const localsMiddleWare = (req, res, next) => {
   res.locals.siteName = 'WeTube';
   res.locals.routes = routes;
-  res.locals.user = req.user || null;
+  res.locals.loggedUser = req.user || null;
   next();
 };
 
