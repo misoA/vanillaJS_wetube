@@ -2,8 +2,10 @@ import multer from 'multer';
 import routes from './routes';
 
 const multerVideo = multer({ dest: 'uploads/videos/' });
+const multerAvatar = multer({ dest: 'uploads/avatars/' });
 
 export const uploadVideo = multerVideo.single('videoFile');
+export const uploadAvatar = multerAvatar.single('avatar');
 
 // make local variable to global
 export const localsMiddleWare = (req, res, next) => {
