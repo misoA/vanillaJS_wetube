@@ -7,6 +7,13 @@ const fullScreenBtn = document.getElementById('jsFullScreenBtn');
 const currentTime = document.getElementById('currentTime');
 const totalTime = document.getElementById('totalTime');
 
+const registerView = () => {
+  const videoId = window.location.pathname.split('/videos/')[1];
+  fetch(`/api/${videoId}/view`, {
+    method: 'POST'
+  });
+};
+
 const handlePlayClick = () => {
   if (videoPlayer.paused) {
     videoPlayer.play();
@@ -89,6 +96,7 @@ const setTotalTime = () => {
 const handleEnded = () => {
   videoPlayer.currentTime = 0;
   playBtn.innerHTML = '<i class="fas fa-play"></i>';
+  registerView();
 };
 
 const handleDrag = event => {

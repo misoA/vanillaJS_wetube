@@ -24,3 +24,13 @@ block content
                 span.video__comments-number 1 comment
             else
                 span.video__comments-number #{video.comments.length} comments
+            if loggedUser
+                form.add-comment#jsAddComment
+                    input(type='text' placeholder='Add a Comment')
+            ul.video__comments-list
+                each comment in video.comments
+                    li
+                        span=comment.text
+                        if loggedUser && comment.creator == loggedUser.id
+                            button.comments-list__delete(id=comment.id) ❌
+                        span.comments-list__creator=`from. ${comment.creator.name}`
