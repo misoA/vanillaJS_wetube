@@ -31,6 +31,6 @@ block content
                 each comment in video.comments
                     li
                         span=comment.text
-                        if loggedUser && comment.creator == loggedUser.id
+                        if loggedUser && comment.creator.id == loggedUser.id
                             button.comments-list__delete(id=comment.id) ❌
                         span.comments-list__creator=`from. ${comment.creator.name}`

@@ -2,7 +2,7 @@
 import routes from '../routes';
 import Video from '../models/Video';
 import Comment from '../models/Comment';
-import { model } from 'mongoose';
+import User from '../models/User';
 
 export const home = async (req, res) => {
   try {
@@ -35,11 +35,11 @@ export const getUpload = (req, res) =>
 export const postUpload = async (req, res) => {
   const {
     body: { title, description },
-    file: { path }
+    file: { location }
   } = req;
 
   const newVideo = await Video.create({
-    fileUrl: path,
+    fileUrl: location,
     title,
     description,
     creator: req.user.id
@@ -79,7 +79,7 @@ export const getEditVideo = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
-    if (video.creator !== req.user.id) {
+    if (video.creator != req.user.id) {
       throw Error();
     }
     res.render('editVideo', { pageTitle: `Edit ${video.title}`, video });
@@ -108,11 +108,25 @@ export const deleteVideo = async (req, res) => {
     params: { id }
   } = req;
   try {
+    // video delete
     const video = await Video.findById(id);
-    if (video.creator !== req.user.id) {
+    if (video.creator != req.user.id) {
       throw Error();
     }
-    await Video.findByIdAndRemove({ _id: id });
+    await Video.findByIdAndRemove(id);
+
+    // video in user delete
+    const user = await User.findById(req.user.id);
+    user.videos.remove(id);
+
+    // comments delete
+    if (video.comments.length > 0) {
+      video.comments.forEach(async comment => {
+        await Comment.findByIdAndDelete(comment);
+        user.comments.remove(comment);
+      });
+    }
+    user.save();
   } catch (error) {
     console.log(error);
   }
