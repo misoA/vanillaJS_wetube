@@ -1,0 +1,12 @@
+extends layouts/main.pug
+
+block content
+    .form-container
+        form(action=routes.users+routes.profile method='post' enctype="multipart/form-data")
+            .fileUpload
+                label(for='avatar') Avatar
+                input(type="file" id="avatar" name="avatar" placeholder="Avatar" accept="image/*")
+            input(type="text" name="name" placeholder="Name" value=loggedUser.name)
+            input(type="email" name="email" placeholder="Email" value=loggedUser.email)
+            input(type="submit" value="Update Profile")
+

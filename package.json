@@ -4,10 +4,16 @@
   "description": "Cloning Youtube with Vanilla and Node JS",
   "main": "index.js",
   "scripts": {
-    "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore '.scss' --ignore 'static'",
-    "dev:assets": "cross-env WEBPACK_ENV=development webpack -w",
-    "build:assets": "WEBPACK_ENV=production webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:server": "nodemon --exec babel-node src/init.js --delay 2 --ignore '.scss' --ignore 'static'",
+    "dev:assets": "cd src && cross-env WEBPACK_ENV=development webpack -w",
+    "build:server": "babel src --out-dir build",
+    "build:assets": "cd src && cross-env WEBPACK_ENV=production webpack",
+    "copyAll": "cp -R src/static build && cp -R src/views build",
+    "build": "npm run build:server && npm run build:assets && npm run copyAll",
+    "prebuild": "rm -rf build",
+    "tunnel": "ngrok http 4000",
+    "start": "node build/init.js",
+    "prestart": "npm run build"
   },
   "author": "miso park",
   "license": "ISC",
@@ -16,6 +22,7 @@
     "@babel/node": "^7.8.4",
     "@babel/polyfill": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
     "autoprefixer": "^9.7.4",
     "aws-sdk": "^2.626.0",
     "axios": "^0.19.2",
@@ -47,6 +54,7 @@
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",

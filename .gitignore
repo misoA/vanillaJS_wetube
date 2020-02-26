@@ -114,6 +114,7 @@ package-lock.json
 
 # etc
 uploads
+build
 avatars
 static
 .eslint*
