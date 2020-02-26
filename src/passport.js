@@ -4,7 +4,7 @@ import FacebookStrategy from 'passport-facebook';
 import User from './models/User';
 import {
   githubLoginCallback,
-  facebookLoginCallback,
+  facebookLoginCallback
 } from './controllers/userController';
 import routes from './routes';
 
@@ -14,10 +14,12 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GH_SECRET,
-      callbackURL: `http://localhost:4000${routes.githubCallback}`,
+      callbackURL: process.env.PRODUCTION
+        ? `https://sleepy-lake-95714.herokuapp.com${routes.githubCallback}`
+        : `http://localhost:4000${routes.githubCallback}`
     },
-    githubLoginCallback,
-  ),
+    githubLoginCallback
+  )
 );
 
 passport.use(
@@ -27,10 +29,10 @@ passport.use(
       clientSecret: process.env.FB_SECRET,
       callbackURL: `https://f7018b2c.ngrok.io${routes.facebookCallback}`,
       profileFields: ['id', 'displayName', 'photos', 'email'],
-      scope: ['public_profile', 'email'],
+      scope: ['public_profile', 'email']
     },
-    facebookLoginCallback,
-  ),
+    facebookLoginCallback
+  )
 );
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
