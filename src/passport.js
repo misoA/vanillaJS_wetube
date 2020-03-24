@@ -27,7 +27,7 @@ passport.use(
     {
       clientID: process.env.FB_ID,
       clientSecret: process.env.FB_SECRET,
-      callbackURL: `https://f7018b2c.ngrok.io${routes.facebookCallback}`,
+      callbackURL: `https://sleepy-lake-95714.herokuapp.com${routes.facebookCallback}`,
       profileFields: ['id', 'displayName', 'photos', 'email'],
       scope: ['public_profile', 'email']
     },
